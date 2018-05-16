@@ -18,8 +18,10 @@ package sanity
 import (
 	"flag"
 	"fmt"
+	"io/ioutil"
 	"os"
 	"testing"
+	"encoding/json"
 
 	"github.com/kubernetes-csi/csi-test/pkg/sanity"
 )
@@ -39,10 +41,22 @@ func init() {
 	flag.BoolVar(&version, prefix+"version", false, "Version of this program")
 	flag.StringVar(&config.TargetPath, prefix+"mountdir", os.TempDir()+"/csi", "Mount point for NodePublish")
 	flag.StringVar(&config.StagingPath, prefix+"stagingdir", os.TempDir()+"/csi", "Mount point for NodeStage if staging is supported")
+	flag.StringVar(&config.SecretPath, prefix+"secretfile", "", "Path to a file with secrets")
 	flag.Parse()
+
 }
 
 func TestSanity(t *testing.T) {
+	if config.SecretPath != "" {
+		data, err := ioutil.ReadFile(config.SecretPath)
+		if err != nil {
+			t.Fatalf("Unable to open %s: %s", config.SecretPath, err.Error());
+		}
+		err = json.Unmarshal(data, &config.Secrets)
+		if err != nil {
+			t.Fatalf("Unable to parse %s: %s", config.SecretPath, err.Error());
+		}
+	}
 	if version {
 		fmt.Printf("Version = %s\n", VERSION)
 		return

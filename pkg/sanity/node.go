@@ -239,6 +239,7 @@ func testFullWorkflowSuccess(s csi.ControllerClient, c csi.NodeClient, controlle
 					},
 				},
 			},
+			ControllerCreateSecrets: config.Secrets,
 		})
 	Expect(err).NotTo(HaveOccurred())
 	Expect(vol).NotTo(BeNil())
@@ -269,6 +270,7 @@ func testFullWorkflowSuccess(s csi.ControllerClient, c csi.NodeClient, controlle
 					},
 				},
 				Readonly: false,
+				ControllerPublishSecrets: config.Secrets,
 			})
 		Expect(err).NotTo(HaveOccurred())
 		Expect(conpubvol).NotTo(BeNil())
@@ -309,6 +311,7 @@ func testFullWorkflowSuccess(s csi.ControllerClient, c csi.NodeClient, controlle
 				Mode: csi.VolumeCapability_AccessMode_SINGLE_NODE_WRITER,
 			},
 		},
+		NodePublishSecrets: config.Secrets,
 	}
 	if nodeStageSupported {
 		nodepubvolRequest.StagingTargetPath = config.StagingPath
@@ -361,6 +364,7 @@ func testFullWorkflowSuccess(s csi.ControllerClient, c csi.NodeClient, controlle
 		context.Background(),
 		&csi.DeleteVolumeRequest{
 			VolumeId: vol.GetVolume().GetId(),
+			ControllerDeleteSecrets: config.Secrets,
 		})
 	Expect(err).NotTo(HaveOccurred())
 }

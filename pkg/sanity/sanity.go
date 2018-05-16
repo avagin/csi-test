@@ -41,6 +41,8 @@ type Config struct {
 	TargetPath  string
 	StagingPath string
 	Address     string
+	SecretPath  string
+	Secrets     map[string]string
 }
 
 // Test will test the CSI driver at the specified address

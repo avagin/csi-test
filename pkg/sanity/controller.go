@@ -205,6 +205,7 @@ var _ = Describe("CreateVolume [Controller Server]", func() {
 						},
 					},
 				},
+				ControllerCreateSecrets: config.Secrets,
 			})
 		Expect(err).NotTo(HaveOccurred())
 		Expect(vol).NotTo(BeNil())
@@ -216,6 +217,7 @@ var _ = Describe("CreateVolume [Controller Server]", func() {
 			context.Background(),
 			&csi.DeleteVolumeRequest{
 				VolumeId: vol.GetVolume().GetId(),
+				ControllerDeleteSecrets: config.Secrets,
 			})
 		Expect(err).NotTo(HaveOccurred())
 	})
@@ -241,6 +243,7 @@ var _ = Describe("CreateVolume [Controller Server]", func() {
 				CapacityRange: &csi.CapacityRange{
 					RequiredBytes: TestVolumeSize,
 				},
+				ControllerCreateSecrets: config.Secrets,
 			})
 		if serverError, ok := status.FromError(err); ok {
 			if serverError.Code() == codes.OutOfRange || serverError.Code() == codes.Unimplemented {
@@ -261,6 +264,7 @@ var _ = Describe("CreateVolume [Controller Server]", func() {
 			context.Background(),
 			&csi.DeleteVolumeRequest{
 				VolumeId: vol.GetVolume().GetId(),
+				ControllerDeleteSecrets: config.Secrets,
 			})
 		Expect(err).NotTo(HaveOccurred())
 	})
@@ -286,6 +290,7 @@ var _ = Describe("CreateVolume [Controller Server]", func() {
 				CapacityRange: &csi.CapacityRange{
 					RequiredBytes: size,
 				},
+				ControllerCreateSecrets: config.Secrets,
 			})
 		Expect(err).NotTo(HaveOccurred())
 		Expect(vol1).NotTo(BeNil())
@@ -348,6 +353,7 @@ var _ = Describe("CreateVolume [Controller Server]", func() {
 					RequiredBytes: size1,
 					LimitBytes:    size1,
 				},
+				ControllerCreateSecrets: config.Secrets,
 			})
 		Expect(err).ToNot(HaveOccurred())
 		Expect(vol1).NotTo(BeNil())
@@ -372,6 +378,7 @@ var _ = Describe("CreateVolume [Controller Server]", func() {
 					RequiredBytes: size2,
 					LimitBytes:    size2,
 				},
+				ControllerCreateSecrets: config.Secrets,
 			})
 		Expect(err).To(HaveOccurred())
 		serverError, ok := status.FromError(err)
@@ -383,6 +390,7 @@ var _ = Describe("CreateVolume [Controller Server]", func() {
 			context.Background(),
 			&csi.DeleteVolumeRequest{
 				VolumeId: vol1.GetVolume().GetId(),
+				ControllerDeleteSecrets: config.Secrets,
 			})
 		Expect(err).NotTo(HaveOccurred())
 	})
@@ -419,6 +427,7 @@ var _ = Describe("DeleteVolume [Controller Server]", func() {
 			context.Background(),
 			&csi.DeleteVolumeRequest{
 				VolumeId: "reallyfakevolumeid",
+				ControllerDeleteSecrets: config.Secrets,
 			})
 		Expect(err).NotTo(HaveOccurred())
 	})
@@ -442,6 +451,7 @@ var _ = Describe("DeleteVolume [Controller Server]", func() {
 						},
 					},
 				},
+				ControllerCreateSecrets: config.Secrets,
 			})
 
 		Expect(err).NotTo(HaveOccurred())
@@ -455,6 +465,7 @@ var _ = Describe("DeleteVolume [Controller Server]", func() {
 			context.Background(),
 			&csi.DeleteVolumeRequest{
 				VolumeId: vol.GetVolume().GetId(),
+				ControllerDeleteSecrets: config.Secrets,
 			})
 		Expect(err).NotTo(HaveOccurred())
 	})
@@ -514,6 +525,7 @@ var _ = Describe("ValidateVolumeCapabilities [Controller Server]", func() {
 						},
 					},
 				},
+				ControllerCreateSecrets: config.Secrets,
 			})
 
 		Expect(err).NotTo(HaveOccurred())
@@ -547,6 +559,7 @@ var _ = Describe("ValidateVolumeCapabilities [Controller Server]", func() {
 			context.Background(),
 			&csi.DeleteVolumeRequest{
 				VolumeId: vol.GetVolume().GetId(),
+				ControllerDeleteSecrets: config.Secrets,
 			})
 		Expect(err).NotTo(HaveOccurred())
 	})
@@ -627,6 +640,7 @@ var _ = Describe("ControllerPublishVolume [Controller Server]", func() {
 						},
 					},
 				},
+				ControllerCreateSecrets: config.Secrets,
 			})
 		Expect(err).NotTo(HaveOccurred())
 		Expect(vol).NotTo(BeNil())
@@ -677,6 +691,7 @@ var _ = Describe("ControllerPublishVolume [Controller Server]", func() {
 			context.Background(),
 			&csi.DeleteVolumeRequest{
 				VolumeId: vol.GetVolume().GetId(),
+				ControllerDeleteSecrets: config.Secrets,
 			})
 		Expect(err).NotTo(HaveOccurred())
 	})
@@ -728,6 +743,7 @@ var _ = Describe("ControllerUnpublishVolume [Controller Server]", func() {
 						},
 					},
 				},
+				ControllerCreateSecrets: config.Secrets,
 			})
 		Expect(err).NotTo(HaveOccurred())
 		Expect(vol).NotTo(BeNil())
@@ -779,6 +795,7 @@ var _ = Describe("ControllerUnpublishVolume [Controller Server]", func() {
 			context.Background(),
 			&csi.DeleteVolumeRequest{
 				VolumeId: vol.GetVolume().GetId(),
+				ControllerDeleteSecrets: config.Secrets,
 			})
 		Expect(err).NotTo(HaveOccurred())
 	})
